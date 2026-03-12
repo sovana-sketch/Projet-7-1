@@ -1,0 +1,114 @@
+body {
+    max-width: 1140px;
+    margin: auto;
+    font-family: 'Work Sans';
+    font-size: 14px;
+}
+.a {
+    text-decoration: none;
+    color: black;
+}
+header {
+    display: flex;
+    justify-content: space-between;
+    margin: 50px 0
+}
+
+h1 {
+    display: flex;
+    flex-direction: column;
+    font-family: 'Syne';
+    font-size: 22px;
+    font-weight: 800;
+    color: #B1663C
+}
+
+h1>span {
+    font-family: 'Work Sans';
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    ;
+}
+
+h2 {
+    font-family: 'Syne';
+    font-weight: 700;
+    font-size: 30px;
+    color: #1D6154
+}
+
+nav ul {
+    display: flex;
+    align-items: center;
+    list-style-type: none;
+    
+
+}
+
+nav li {
+    padding: 0 10px;
+    font-size: 1.2em;
+}
+nav li a {
+    text-decoration: none;
+    color: black;
+}
+
+#login {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 100px
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+}
+
+.form label {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.form input {
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.form button {
+    display: flex;
+    justify-content: center;
+    width: 50%;
+    padding: 10px;
+    background-color: #1D6154;
+    color: white;
+    border: none;
+    border-radius: 60px;
+    cursor: pointer;
+    
+}
+
+.form button:hover {
+    background-color: #B1663C;
+}
+
+.form a {
+
+    margin-top: 10px;
+    font-size: 0.9em;
+    color: black;
+    text-decoration: underline;
+    text-align: center;
+}
+
+footer nav ul {
+    position: absolute;
+    bottom: 0;
+    right: 0%;
+    margin: 2em
+}
