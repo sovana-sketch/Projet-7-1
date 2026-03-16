@@ -54,6 +54,10 @@ nav li a {
     color: black;
 }
 
+#login-link {
+   font-weight:600;
+   
+}
 #login {
     display: flex;
     flex-direction: column;
