@@ -115,9 +115,9 @@ async function buttonappartements() {
 buttonappartements();
 
 async function buttonhotel() {
-    const buttonHotel = document.querySelector("#Hotel et restaurants");
+    const buttonHotel = document.querySelector("#Hotel_et_restaurants");
     buttonHotel.addEventListener("click", async () => {
-        console.log("Hotel et restaurants");
+        console.log("Hotel_et_restaurants");
         const works = await getWorks();
         const gallery = document.querySelector(".gallery");
         gallery.innerHTML = "";
