@@ -1,25 +1,19 @@
 // fetch login
-fetch("http://localhost:5678/api/users/login", {
-    method: "POST",
-    headers: {
-        "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-        email: "user@example.com",    
-        password: "password123"
-    })
-})
 
 async function login() {
-    const email = document.getElementById('.email').value;
-    const password = document.getElementById('.password').value;
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    debugger;
     try {
+
         const response = await fetch('http://localhost:5678/api/users/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ email, password })
+            body: JSON.stringify({ 
+                email: email, 
+                password: password })
         });
         if (response.ok) {
             const data = await response.json();
@@ -40,22 +34,14 @@ async function login() {
     }
     
 }
-login();
 
-const loginButton = document.querySelector('#loginButton');
-loginButton.addEventListener('click', (event) => {
-  const email = event.target.querySelector('.email').value;
-  const password = event.target.querySelector('.password').value;
-    if (!email || !password) {
-        event.preventDefault();
-        alert('Please fill in both email and password fields.');
-    }
-    else {
-        login();
-    }
+
+const loginform = document.getElementById('loginform');
+loginform.addEventListener('submit',  (event) => {
+    event.preventDefault();
+  debugger;
+    login();
+  
 });
-
-loginButton.addEventListener('click', login);
-
 
 
