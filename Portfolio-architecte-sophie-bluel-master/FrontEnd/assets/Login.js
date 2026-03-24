@@ -12,7 +12,8 @@ async function login() {
             },
             body: JSON.stringify({
                 email: email,
-                password: password
+                password: password,
+              
             })
         });
         if (response.ok) {
@@ -43,28 +44,6 @@ loginform.addEventListener('submit', (event) => {
     login();
 
 });
-let token = window.localStorage.getItem('token');
-console.log(token);
 
-const logout = document.querySelector("#logout");
-logout.addEventListener("submit", () => {
-    localStorage.removeItem("token");
-    window.location.href = 'index.html';
-});
-console.log(logout);
-
-let admin = localStorage.getItem("token");
-if (admin) {
-    logoutA = document.querySelector("#logout").style.display = "block";
-    loginH = document.querySelector("#login").style.hidden = "true";
-
-
-
-}
-else {
-    logoutA = document.querySelector("#logout").style.display = "none";
-    logoutA.style.hidden = "true";
-    loginH = document.querySelector("#login").style.hidden = "false";
-}
 
 
