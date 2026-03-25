@@ -64,12 +64,14 @@ section {
 }
 
 h1{
+	padding-top: 38px;
 	display: flex;
 	flex-direction: column;
 	font-family: 'Syne';
 	font-size: 22px;
 	font-weight: 800;
 	color: #B1663C
+	
 }
 
 h1 > span {
@@ -86,6 +88,7 @@ h2{
 	color: #1D6154
 }
 nav ul {
+	padding-top: 38px;
 	display: flex;
 	align-items: center;
 	list-style-type: none;
