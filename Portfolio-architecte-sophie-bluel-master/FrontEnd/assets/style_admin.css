@@ -12,7 +12,7 @@
 
 #mode_edition,
 #mode_edition2 {
-    position: absolute;
+    position: relative;
     top: 15%;
     right: 50%;
     transform: translateX(50%);
@@ -26,14 +26,23 @@
     }
 }
 
-#mode_edition,
-#mode_edition2, h1 {
+.gallery_edt_header h1{
     color: black;
     text-align: center;
     margin-top: 20px;
     font-style: none;
     font-family: 'work sans';
     font-weight: 400;
+}
+
+.gallery_edt content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 20px;
+    max-height: fit-content;
+    overflow-y: auto;
 }
 /* formulaire */
 #photo_form {
@@ -44,9 +53,18 @@
     margin-top: 20px;
 }
 
+.gallery_edt_footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 20px 0;
+    border-top: 1px solid #ccc;
+    
+} 
 
-#add_photo,
-#valide_btn {
+.gallery_edt_footer button {
     display: block;
     margin: 20px auto;
     padding: 10px 60px;
@@ -66,7 +84,7 @@
     background-color: transparent;
     border: none;
     font-size: 1.5em;
-    cursor: pointer;
+    cursor: pointer; 
 }
 
 #btn-back {

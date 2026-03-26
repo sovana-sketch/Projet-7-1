@@ -22,11 +22,20 @@ else {
         window.location.href = './index.html';
     });
 }
-
+//filter disables
+const unfilters = document.querySelector('filters')
+if (token){
+   filters.style.display='none'
+}
+else {
+    filters.style.display='block'
+}
 //modal
 
-
+const modalbtns = document.getElementById('edit-btn');
 if (token) {
-   
-
+    modal.style.display = 'block';
+  
+}
+else {    modal.style.display = 'none';
 }
