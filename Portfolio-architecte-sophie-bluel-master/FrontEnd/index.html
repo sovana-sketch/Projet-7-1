@@ -17,7 +17,8 @@
 
 <body>
 	<header>
-		<button popovertarget="mode_edition" id="edit-btn">Mode édition</button>
+		<!-- Modale d'édition -->
+		<button popovertarget="mode_edition" data-btn="btn_modal" id="edit-btn">Mode édition</button>
 		<div popover="auto" id="mode_edition">
 			<div class="gallery_edt_header">
 				<h1>Galerie photo</h1>
@@ -26,18 +27,32 @@
 				<!-- Contenu de la galerie d'édition -->
 			</div>
 			<div class="gallery_edt_footer">
-				<button popovertarget="mode_edition2" id="add_photo">Ajouter une photo</button>
+				<button popovertarget="mode_edition2" data-btn="btn-modal" id="valid_btn">Ajouter une photo</button>
 			</div>
 			<button popovertarget="mode_edition" class="btn_close">X</button>
 		</div>
+		<!-- Modale d'ajout de photo -->
 		<div popover="auto" id="mode_edition2">
 			<div class="gallery_edt_header">
-				<h1>Ajouter une photo</h1>
+				<h1>Ajout photo</h1>
 			</div>
-			<form action=""></form>
+			<div class="gallery_edt content">
+				<button class="valid_btn">+ Ajouter Photo</button>
+				<p>.jpg,png:4 mo max</p>
+			</div>
+			<form action="" method="post">
+				<label for="Titre">Titre</label>
+				<input type="text" name="Titre" id="Titre">
+				<label for="Catégorie">Catégorie</label>
+				<select name="Catégorie" id="Catégorie">
+					<option value="Objets">Objets</option>
+					<option value="Appartements">Appartements</option>
+					<option value="Hotel_et_restaurants">Hotel & restaurants</option>
+				</select>
+			</form>
 			<button popovertarget="mode_edition" class="btn_close">X</button>
-			<button popovertarget="#mode_edition" id="btn-back">Retour</button>
-			
+			<button popovertarget="mode_edition" data-btn="btn_modal" id="btn-back">Retour</button>
+
 			<div class="gallery_edt_footer">
 				<button type="submit" id="valide_btn">Valider</button>
 			</div>
@@ -75,10 +90,10 @@
 		<section id="portfolio">
 			<h2 id="projets">Mes Projets</h2>
 			<ul class="filters">
-				<li id="tous">Tous</li>
-				<li id="Objets">Objets</li>
-				<li id="Appartements">Appartements</li>
-				<li id="Hotel_et_restaurants">Hotel & restaurants</li>
+				<li id="tous" data-filter="all">Tous</li>
+				<li id="Objets" data-filter="Objets">Objets</li>
+				<li id="Appartements" data-filter="Appartements">Appartements</li>
+				<li id="Hotel_et_restaurants" data-filter="Hotel_et_restaurants">Hotel & restaurants</li>
 			</ul>
 			<div class="gallery">
 
