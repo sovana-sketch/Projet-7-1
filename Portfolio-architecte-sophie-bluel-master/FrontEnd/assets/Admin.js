@@ -55,10 +55,6 @@ const mode_edition2 = document.getElementById('mode_edition2');
 valid_btn.addEventListener('click', () => {
     mode_edition2.classList.add('show');
 });
-btn_back.addEventListener('click', () => {
-    mode_edition.classList.add('show');
-    mode_edition2.classList.remove('show');
-});
 
 const btn_close = document.querySelectorAll('.btn_close');
 btn_close.forEach(btn => {

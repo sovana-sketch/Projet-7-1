@@ -7,6 +7,7 @@
     background-color: black;
     border: none;
     cursor: pointer;
+    color: white;
 
 }
 
@@ -29,11 +30,14 @@
     justify-content: flex-start;
     gap: 20px;
     
-    &::backdrop {
+   
+}
+
+#mode_edition {
+     &::backdrop {
         background-color: rgba(0, 0, 0, 0.7);
     }
 }
-
 #mode_edition.show,
 #mode_edition2.show {
     opacity: 1;

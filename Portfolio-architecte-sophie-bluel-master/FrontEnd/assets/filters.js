@@ -27,8 +27,7 @@ console.log(categories);
 async function displayGallery() {
     const works = await getWorks();
     const gallery = document.querySelector(".gallery");
-    gallery.innerHTML = "http://localhost:5678/api/works";
-    works.forEach(work => {
+       works.forEach(work => {
         const figure = document.createElement("figure");
         const image = document.createElement("img");
         image.src = work.imageUrl;
