@@ -18,7 +18,7 @@ async function displayGalleryEdit() {
         const figure = document.createElement("figure");
         const image = document.createElement("img");
         const trashIcon = document.createElement("i");
-        trashIcon.classList.add("fa-solid", "fa-trash");
+        trashIcon.classList.add("fa-regular", "fa-trash-can");
         figure.appendChild(trashIcon);
         image.src = project.imageUrl;
         image.alt = project.title;
