@@ -18,42 +18,49 @@
 <body>
 	<header>
 		<!-- Modale d'édition -->
-		<button popovertarget="mode_edition" data-btn="btn_modal" id="edit-btn">Mode édition</button>
-		<div popover="auto" id="mode_edition">
-			<div class="part-one">
-				<div class="gallery_edt_header">
-					<h1>Galerie photo</h1>
-				</div>
-				<div class="gallery_edt content">
-					<!-- Contenu de la galerie d'édition -->
+		<button type="button" popovertarget="mode_edition" data-btn="btn_modal" id="edit-btn"> <i class="fa-regular fa-pen-to-square"></i> Mode edition</button>
+
+		<div popover="auto" id="mode_edition" class="modal" aria-modal="true" role="dialog" aria-labelledby="gallery-modal-title">
+			<div class="modal_card">
+				<button type="button" class="btn_close" popovertarget="mode_edition" popovertargetaction="hide"
+					aria-label="Fermer">X</button>
+				<h2 id="gallery-modal-title">Galerie photo</h2>
+				<div id="gallery_edt_content">
+					<!-- Contenu de la galerie d'edition -->
 				</div>
 				<div class="gallery_edt_footer">
-					<button popovertarget="mode_edition2" data-btn="btn-modal" id="valid_btn">Ajouter une photo</button>
+					<button type="button" data-btn="btn-modal" id="valid_btn" data-switch-popover="mode_edition2"
+						data-hide-popover="mode_edition">Ajouter une photo</button>
 				</div>
 			</div>
-			<div class="part-two">
-				<div class="gallery_edt_header">
-					<h1>Ajout photo</h1>
-				</div>
-				<div class="gallery_edt content">
-					<button class="valid_btn">+ Ajouter Photo</button>
-					<p>.jpg,png:4 mo max</p>
-				</div>
-				<form action="" method="post">
-					<label for="Titre">Titre</label>
-					<input type="text" name="Titre" id="Titre">
-					<label for="Catégorie">Catégorie</label>
-					<select name="Catégorie" id="Catégorie">
-						<option value="Objets">Objets</option>
-						<option value="Appartements">Appartements</option>
-						<option value="Hotel_et_restaurants">Hotel & restaurants</option>
-					</select>
-				</form>
-			</div>
-			<button data-btn="btn_modal" id="btn-back">Retour</button>
-			<button popovertarget="mode_edition" class="btn_close">X</button>
 		</div>
 
+		<div popover="auto" id="mode_edition2" class="modal" aria-modal="true" role="dialog" aria-labelledby="add-modal-title">
+			<div class="modal_card">
+				<button type="button" class="btn_close" popovertarget="mode_edition2" popovertargetaction="hide"
+					aria-label="Fermer">X</button>
+				<button type="button" id="btn-back" aria-label="Retour" data-switch-popover="mode_edition"
+					data-hide-popover="mode_edition2">←</button>
+				<h2 id="add-modal-title">Ajout photo</h2>
+				<div class="upload_box">
+					<i class="fa-solid fa-image"></i>
+					<label for="photo" class="valid_btn">+ Ajouter photo</label>
+					<input type="file" name="photo" id="photo" accept=".jpg,.jpeg,.png">
+					<p>jpg, png : 4 mo max</p>
+				</div>
+				<form class="modal_form" action="" method="post">
+					<label for="Titre">Titre</label>
+					<input type="text" name="Titre" id="Titre">
+					<label for="Categorie">Categorie</label>
+					<select name="Categorie" id="category_select">
+						
+					
+					</select>
+					<div class="gallery_edt_footer">
+						<button type="submit">Valider</button>
+					</div>
+				</form>
+			</div>
 		</div>
 
 		<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
@@ -86,6 +93,7 @@
 		</section>
 		<section id="portfolio">
 			<h2 id="projets">Mes Projets</h2>
+			<button type="button" popovertarget="mode_edition" data-btn="btn_modal" id="modify-btn"> <i class="fa-regular fa-pen-to-square"></i> Modifier</button>
 			<ul class="filters">
 				<li id="tous" data-filter="all">Tous</li>
 				<li id="Objets" data-filter="Objets">Objets</li>
@@ -121,5 +129,6 @@
 </body>
 <script src="./assets/Admin.js"></script>
 <script src="./assets/filters.js"></script>
+<script src="./assets/Gallery-edt.js"></script>
 
 </html>

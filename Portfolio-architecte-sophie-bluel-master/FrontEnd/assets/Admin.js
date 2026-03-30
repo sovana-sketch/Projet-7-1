@@ -44,31 +44,43 @@ if (token === null) {
 else {
     edit_btn.style.display = 'block';
 }
-const valid_btn = document.getElementById('valid_btn');
-edit_btn.addEventListener('click', () => {
-    mode_edition.classList.add('show');
-});
-const btn_back = document.getElementById('btn-back');
-const mode_edition = document.getElementById('mode_edition');
-const mode_edition2 = document.getElementById('mode_edition2');
+//!!
+//popover navigation between gallery and add-photo dialogs
+const popoverSwitchBtns = document.querySelectorAll('[data-switch-popover]');
 
-valid_btn.addEventListener('click', () => {
-    mode_edition2.classList.add('show');
-});
-
-const btn_close = document.querySelectorAll('.btn_close');
-btn_close.forEach(btn => {
+popoverSwitchBtns.forEach((btn) => {
     btn.addEventListener('click', () => {
-        mode_edition.classList.remove('show');
-        mode_edition2.classList.remove('show');
-    });
-});
+        const targetId = btn.getAttribute('data-switch-popover');
+        const hideId = btn.getAttribute('data-hide-popover');
 
-[mode_edition, mode_edition2].forEach(modal => {
-    modal.addEventListener('click', (e) => {
-        if (e.target === modal) {
-            mode_edition.classList.remove('show');
-            mode_edition2.classList.remove('show');
+        const targetPopover = targetId ? document.getElementById(targetId) : null;
+        const hidePopover = hideId ? document.getElementById(hideId) : null;
+
+        if (hidePopover && typeof hidePopover.hidePopover === 'function') {
+            hidePopover.hidePopover();
+        }
+
+        if (targetPopover && typeof targetPopover.showPopover === 'function') {
+            targetPopover.showPopover();
         }
     });
 });
+
+// Close popover when clicking outside modal content.
+const popovers = document.querySelectorAll('.modal[popover]');
+
+popovers.forEach((popover) => {
+    popover.addEventListener('click', (event) => {
+        const modalCard = popover.querySelector('.modal_card');
+
+        if (!modalCard || modalCard.contains(event.target)) {
+            return;
+        }
+
+        if (typeof popover.hidePopover === 'function') {
+            popover.hidePopover();
+        }
+    });
+});
+
+
