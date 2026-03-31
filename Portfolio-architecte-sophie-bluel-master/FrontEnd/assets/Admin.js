@@ -40,9 +40,18 @@ if (token) {
 const edit_btn = document.getElementById('edit-btn');
 if (token === null) {
     edit_btn.style.display = 'none';
+    
 }
 else {
     edit_btn.style.display = 'block';
+};
+const modify_btn = document.getElementById('modify-btn');
+if (token === null) {
+    modify_btn.style.display = 'none';
+    
+}
+else {
+    modify_btn.style.display = 'block';
 }
 //!!
 //popover navigation between gallery and add-photo dialogs
