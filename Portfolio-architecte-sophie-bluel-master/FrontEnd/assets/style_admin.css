@@ -219,16 +219,21 @@ header {
 #btn-back {
     left: 18px;
 }
+.project_sec {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+   
+}
 #modify-btn {
-    position: absolute;
-    top: 50%;
-    right: 38%;
     background: transparent;
     color: #111;
     border: none;
     cursor: pointer;
     font-size: 16px;
     line-height: 1;
+    align-self:start;
 }
 i {
     font-size: 16px;
