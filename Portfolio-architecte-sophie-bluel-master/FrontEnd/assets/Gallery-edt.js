@@ -1,4 +1,7 @@
 // gallery-edt suppression
+const MAX_FILE_SIZE = 4 * 1024 * 1024;
+const ALLOWED_FILE_TYPES = ["image/jpeg", "image/jpg", "image/png"];
+
 async function getprojects(url) {
     const response = await fetch(url || "http://localhost:5678/api/works");
 
@@ -10,25 +13,77 @@ async function getprojects(url) {
 const projects = getprojects("http://localhost:5678/api/works");
 console.log(projects);
 
+function notifyProjectCreated(project) {
+    document.dispatchEvent(new CustomEvent("projectCreated", {
+        detail: project
+    }));
+}
+
+function notifyProjectDeleted(projectId) {
+    document.dispatchEvent(new CustomEvent("projectDeleted", {
+        detail: { projectId }
+    }));
+}
+
+function createProjectFigure(project) {
+    const figure = document.createElement("figure");
+    figure.setAttribute("data-project-id", project.id);
+
+    const image = document.createElement("img");
+    const trashIcon = document.createElement("i");
+
+    trashIcon.classList.add("trash_button", "fa-regular", "fa-trash-can");
+    image.src = project.imageUrl;
+    image.alt = project.title;
+
+    figure.appendChild(trashIcon);
+    figure.appendChild(image);
+
+    trashIcon.addEventListener('click', () => {
+        deleteProject(project.id);
+    });
+
+    return figure;
+}
+
+function resetPreview() {
+    if (currentPreviewUrl) {
+        URL.revokeObjectURL(currentPreviewUrl);
+        currentPreviewUrl = "";
+    }
+
+    photoPreview.removeAttribute("src");
+    photoPreview.style.display = "none";
+    if (uploadIcon) uploadIcon.style.display = "block";
+    if (uploadLabel) uploadLabel.style.display = "block";
+    if (uploadHint) uploadHint.style.display = "block";
+}
+
+function isValidPhoto(file) {
+    if (!file) {
+        return false;
+    }
+
+    if (!ALLOWED_FILE_TYPES.includes(file.type)) {
+        alert("Seuls les fichiers JPEG et PNG sont autorisés.");
+        return false;
+    }
+
+    if (file.size > MAX_FILE_SIZE) {
+        alert("Le fichier ne doit pas dépasser 4 Mo.");
+        return false;
+    }
+
+    return true;
+}
+
 async function displayGalleryEdit() {
     const projects = await getprojects();
     const galleryEdit = document.getElementById("gallery_edt_content");
  
     projects.forEach(project => {
-        const figure = document.createElement("figure");
-        figure.setAttribute("data-project-id", project.id);
-        const image = document.createElement("img");
-        const trashIcon = document.createElement("i");
-        trashIcon.classList.add("trash_button", "fa-regular", "fa-trash-can");
-        figure.appendChild(trashIcon);
-        image.src = project.imageUrl;
-        image.alt = project.title;
-        figure.appendChild(image);
+        const figure = createProjectFigure(project);
         galleryEdit.appendChild(figure);
-       
-        trashIcon.addEventListener('click', () => {
-            deleteProject(project.id);
-        });
 
        console.log(project);
     });
@@ -45,11 +100,11 @@ async function deleteProject(projectId) {
         });
         if (response.ok) {
             console.log(`Project with ID ${projectId} deleted successfully.`);
-            // Optionally, remove the project from the UI here
             const projectElement = document.querySelector(`figure[data-project-id="${projectId}"]`);
             if (projectElement) {
                 projectElement.remove();
             }
+            notifyProjectDeleted(projectId);
         } else {
             console.error(`Failed to delete project with ID ${projectId}:`, response.statusText);
         }
@@ -126,19 +181,20 @@ if (uploadBox) {
     uploadBox.prepend(photoPreview);
 }
 
+resetPreview();
+
 if (photoInput) {
     photoInput.addEventListener("change", (event) => {
         const file = event.target.files && event.target.files[0];
 
         if (!file) {
-            if (currentPreviewUrl) {
-                URL.revokeObjectURL(currentPreviewUrl);
-                currentPreviewUrl = "";
-            }
-            photoPreview.style.display = "none";
-            if (uploadIcon) uploadIcon.style.display = "block";
-            if (uploadLabel) uploadLabel.style.display = "block";
-            if (uploadHint) uploadHint.style.display = "block";
+            resetPreview();
+            return;
+        }
+
+        if (!isValidPhoto(file)) {
+            event.target.value = "";
+            resetPreview();
             return;
         }
 
@@ -166,6 +222,11 @@ if (sendForm) {
             alert("Veuillez remplir tous les champs du formulaire.");
             return;
         }
+        if (!isValidPhoto(photoFile)) {
+            photoInput.value = "";
+            resetPreview();
+            return;
+        }
         const formData = new FormData();
         formData.append("title", title);
         formData.append("category", categoryId);
@@ -182,7 +243,18 @@ if (sendForm) {
             if (response.ok) {
                 const data = await response.json();
                 console.log('Form submitted successfully:', data);
+                const galleryEdit = document.getElementById("gallery_edt_content");
+                if (galleryEdit) {
+                    galleryEdit.appendChild(createProjectFigure(data));
+                }
+                notifyProjectCreated(data);
+                titleInput.value = "";
+                document.getElementById("category_select").selectedIndex = 0;
+                photoInput.value = "";
+                resetPreview();
             } else {
+                const errorData = await response.json().catch(() => null);
+                alert(errorData?.error || "Échec de l'ajout du projet.");
                 console.error('Failed to submit form:', response.statusText);
             }
         } catch (error) {
@@ -190,3 +262,4 @@ if (sendForm) {
         }
     });
 }
+//add project to gallery-edt instantly

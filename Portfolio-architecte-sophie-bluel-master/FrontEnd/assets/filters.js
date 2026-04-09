@@ -27,8 +27,10 @@ console.log(categories);
 async function displayGallery() {
     const works = await getWorks();
     const gallery = document.querySelector(".gallery");
+    gallery.innerHTML = "";
        works.forEach(work => {
         const figure = document.createElement("figure");
+        figure.setAttribute("data-project-id", work.id);
         const image = document.createElement("img");
         image.src = work.imageUrl;
         image.alt = work.title;
@@ -40,6 +42,36 @@ async function displayGallery() {
 }
 
 let gallery = displayGallery();
+
+function createGalleryFigure(work) {
+    const figure = document.createElement("figure");
+    const image = document.createElement("img");
+
+    figure.setAttribute("data-project-id", work.id);
+    image.src = work.imageUrl;
+    image.alt = work.title;
+    figure.appendChild(image);
+
+    return figure;
+}
+
+document.addEventListener("projectCreated", (event) => {
+    const gallery = document.querySelector(".gallery");
+
+    if (!gallery) {
+        return;
+    }
+
+    gallery.appendChild(createGalleryFigure(event.detail));
+});
+
+document.addEventListener("projectDeleted", (event) => {
+    const projectElement = document.querySelector(`.gallery figure[data-project-id="${event.detail.projectId}"]`);
+
+    if (projectElement) {
+        projectElement.remove();
+    }
+});
 
 
 //button filter
