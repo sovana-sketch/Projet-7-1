@@ -1,6 +1,4 @@
 // gallery-edt suppression
-const MAX_FILE_SIZE = 4 * 1024 * 1024;
-const ALLOWED_FILE_TYPES = ["image/jpeg", "image/jpg", "image/png"];
 
 async function getprojects(url) {
     const response = await fetch(url || "http://localhost:5678/api/works");
@@ -12,7 +10,9 @@ async function getprojects(url) {
 
 const projects = getprojects("http://localhost:5678/api/works");
 console.log(projects);
+
 //add project to gallery-edt instantly
+
 function notifyProjectCreated(project) {
     document.dispatchEvent(new CustomEvent("projectCreated", {
         detail: project
@@ -46,36 +46,7 @@ function createProjectFigure(project) {
     return figure;
 }
 
-function resetPreview() {
-    if (currentPreviewUrl) {
-        URL.revokeObjectURL(currentPreviewUrl);
-        currentPreviewUrl = "";
-    }
 
-    photoPreview.removeAttribute("src");
-    photoPreview.style.display = "none";
-    if (uploadIcon) uploadIcon.style.display = "block";
-    if (uploadLabel) uploadLabel.style.display = "block";
-    if (uploadHint) uploadHint.style.display = "block";
-}
-
-function isValidPhoto(file) {
-    if (!file) {
-        return false;
-    }
-
-    if (!ALLOWED_FILE_TYPES.includes(file.type)) {
-        alert("Seuls les fichiers JPEG et PNG sont autorisés.");
-        return false;
-    }
-
-    if (file.size > MAX_FILE_SIZE) {
-        alert("Le fichier ne doit pas dépasser 4 Mo.");
-        return false;
-    }
-
-    return true;
-}
 
 async function displayGalleryEdit() {
     const projects = await getprojects();
@@ -115,6 +86,7 @@ async function deleteProject(projectId) {
 
 
 //gallery-edt addition
+
 //catergory select
 async function getcategories() {
     const response = await fetch("http://localhost:5678/api/categories");
@@ -210,7 +182,40 @@ if (photoInput) {
         if (uploadHint) uploadHint.style.display = "none";
     });
 }
+function resetPreview() {
+    if (currentPreviewUrl) {
+        URL.revokeObjectURL(currentPreviewUrl);
+        currentPreviewUrl = "";
+    }
+
+    photoPreview.removeAttribute("src");
+    photoPreview.style.display = "none";
+    if (uploadIcon) uploadIcon.style.display = "block";
+    if (uploadLabel) uploadLabel.style.display = "block";
+    if (uploadHint) uploadHint.style.display = "block";
+}
+
+function isValidPhoto(file) {
+    if (!file) {
+        return false;
+    }
+
+    if (!ALLOWED_FILE_TYPES.includes(file.type)) {
+        alert("Seuls les fichiers JPEG et PNG sont autorisés.");
+        return false;
+    }
+
+    if (file.size > MAX_FILE_SIZE) {
+        alert("Le fichier ne doit pas dépasser 4 Mo.");
+        return false;
+    }
+
+    return true;
+}
 //send form
+const MAX_FILE_SIZE = 4 * 1024 * 1024;
+const ALLOWED_FILE_TYPES = ["image/jpeg", "image/jpg", "image/png"];
+
 const sendForm = document.getElementById("send_project");
 if (sendForm) {
     sendForm.addEventListener("click", async (event) => {
