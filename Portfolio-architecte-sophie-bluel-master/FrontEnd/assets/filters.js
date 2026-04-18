@@ -54,7 +54,7 @@ function createGalleryFigure(work) {
 
     return figure;
 }
-
+// maj instant gallery
 document.addEventListener("projectCreated", (event) => {
     const gallery = document.querySelector(".gallery");
 

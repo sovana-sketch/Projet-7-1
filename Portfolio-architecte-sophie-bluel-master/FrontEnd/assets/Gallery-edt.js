@@ -12,7 +12,7 @@ async function getprojects(url) {
 
 const projects = getprojects("http://localhost:5678/api/works");
 console.log(projects);
-
+//add project to gallery-edt instantly
 function notifyProjectCreated(project) {
     document.dispatchEvent(new CustomEvent("projectCreated", {
         detail: project
@@ -262,4 +262,4 @@ if (sendForm) {
         }
     });
 }
-//add project to gallery-edt instantly
+
