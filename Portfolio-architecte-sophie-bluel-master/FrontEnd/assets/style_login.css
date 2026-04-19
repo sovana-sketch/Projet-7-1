@@ -104,6 +104,18 @@ nav li a {
     background-color: #B1663C;
 }
 
+.error-message {
+    color: #d32f2f;
+    font-size: 12px;
+    margin: 4px 0 10px 0;
+    display: none;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
 .form a {
     padding-top: 30px;
     margin-top: 10px;

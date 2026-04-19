@@ -147,7 +147,7 @@ li:hover {
 	border-radius: 60px;
 
 }
-.filters li:active, .filters li:hover {
+.filters li:active, .filters li:hover, .filters li.active {
 	background-color: #1D6154;
 	color: white;
 }

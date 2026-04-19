@@ -75,10 +75,20 @@ document.addEventListener("projectDeleted", (event) => {
 
 
 //button filter
+function setActiveFilter(filterId) {
+    const filters = document.querySelectorAll(".filters li");
+    filters.forEach(filter => filter.classList.remove("active"));
+    const activeFilter = document.querySelector(`#${filterId}`);
+    if (activeFilter) {
+        activeFilter.classList.add("active");
+    }
+}
+
 async function buttonall() {
     const buttonAll = document.querySelector("#tous");
     buttonAll.addEventListener("click", async () => {
         console.log("tous");
+        setActiveFilter("tous");
         const works = await getWorks();
         const gallery = document.querySelector(".gallery");
         gallery.innerHTML = "";
@@ -97,10 +107,16 @@ async function buttonall() {
 }
 buttonall();
 
+// Set "Tous" as active by default
+document.addEventListener("DOMContentLoaded", () => {
+    setActiveFilter("tous");
+});
+
 async function buttonobjects() {
     const buttonObjects = document.querySelector("#Objets");
     buttonObjects.addEventListener("click", async () => {
         console.log("Objets");
+        setActiveFilter("Objets");
         const works = await getWorks();
         const gallery = document.querySelector(".gallery");
         gallery.innerHTML = "";
@@ -125,6 +141,7 @@ async function buttonappartements() {
     const buttonAppartements = document.querySelector("#Appartements");
     buttonAppartements.addEventListener("click", async () => {
         console.log("Appartements");
+        setActiveFilter("Appartements");
         const works = await getWorks();
         const gallery = document.querySelector(".gallery");
         gallery.innerHTML = "";
@@ -149,6 +166,7 @@ async function buttonhotel() {
     const buttonHotel = document.querySelector("#Hotel_et_restaurants");
     buttonHotel.addEventListener("click", async () => {
         console.log("Hotel_et_restaurants");
+        setActiveFilter("Hotel_et_restaurants");
         const works = await getWorks();
         const gallery = document.querySelector(".gallery");
         gallery.innerHTML = "";

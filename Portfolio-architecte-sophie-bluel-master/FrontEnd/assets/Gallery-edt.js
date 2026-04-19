@@ -155,9 +155,25 @@ if (uploadBox) {
 
 resetPreview();
 
+// Create error message elements
+const photoError = document.createElement("div");
+photoError.className = "error-message";
+if (uploadBox) {
+    uploadBox.appendChild(photoError);
+}
+
+const titleError = document.createElement("div");
+titleError.className = "error-message";
+titleInput.parentElement.appendChild(titleError);
+
+const categoryError = document.createElement("div");
+categoryError.className = "error-message";
+document.getElementById("category_select").parentElement.appendChild(categoryError);
+
 if (photoInput) {
     photoInput.addEventListener("change", (event) => {
         const file = event.target.files && event.target.files[0];
+        photoError.style.display = "none";
 
         if (!file) {
             resetPreview();
@@ -201,12 +217,14 @@ function isValidPhoto(file) {
     }
 
     if (!ALLOWED_FILE_TYPES.includes(file.type)) {
-        alert("Seuls les fichiers JPEG et PNG sont autorisés.");
+        photoError.textContent = "Seuls les fichiers JPEG et PNG sont autorisés.";
+        photoError.style.display = "block";
         return false;
     }
 
     if (file.size > MAX_FILE_SIZE) {
-        alert("Le fichier ne doit pas dépasser 4 Mo.");
+        photoError.textContent = "Le fichier ne doit pas dépasser 4 Mo.";
+        photoError.style.display = "block";
         return false;
     }
 
@@ -216,22 +234,67 @@ function isValidPhoto(file) {
 const MAX_FILE_SIZE = 4 * 1024 * 1024;
 const ALLOWED_FILE_TYPES = ["image/jpeg", "image/jpg", "image/png"];
 
+// Validation functions
+function validateTitle(title) {
+    if (!title || title.trim() === "") {
+        titleError.textContent = "Le titre est obligatoire.";
+        titleError.style.display = "block";
+        return false;
+    }
+    titleError.style.display = "none";
+    return true;
+}
+
+function validateCategory(categoryId) {
+    if (!categoryId || categoryId === "") {
+        categoryError.textContent = "Veuillez sélectionner une catégorie.";
+        categoryError.style.display = "block";
+        return false;
+    }
+    categoryError.style.display = "none";
+    return true;
+}
+
+function validatePhoto() {
+    const photoFile = photoInput.files && photoInput.files[0];
+    if (!photoFile) {
+        photoError.textContent = "Veuillez sélectionner une photo.";
+        photoError.style.display = "block";
+        return false;
+    }
+    if (!isValidPhoto(photoFile)) {
+        return false;
+    }
+    photoError.style.display = "none";
+    return true;
+}
+
+// Clear errors on input change
+titleInput.addEventListener("input", () => {
+    titleError.style.display = "none";
+});
+
+document.getElementById("category_select").addEventListener("change", () => {
+    categoryError.style.display = "none";
+});
+
 const sendForm = document.getElementById("send_project");
 if (sendForm) {
     sendForm.addEventListener("click", async (event) => {
         event.preventDefault();
         const title = titleInput.value;
         const categoryId = document.getElementById("category_select").value;
-        const photoFile = photoInput.files && photoInput.files[0];
-        if (!title || !categoryId || !photoFile ) {
-            alert("Veuillez remplir tous les champs du formulaire.");
+        
+        // Validate each field
+        const isTitleValid = validateTitle(title);
+        const isCategoryValid = validateCategory(categoryId);
+        const isPhotoValid = validatePhoto();
+        
+        if (!isTitleValid || !isCategoryValid || !isPhotoValid) {
             return;
         }
-        if (!isValidPhoto(photoFile)) {
-            photoInput.value = "";
-            resetPreview();
-            return;
-        }
+        
+        const photoFile = photoInput.files[0];
         const formData = new FormData();
         formData.append("title", title);
         formData.append("category", categoryId);
@@ -257,6 +320,11 @@ if (sendForm) {
                 document.getElementById("category_select").selectedIndex = 0;
                 photoInput.value = "";
                 resetPreview();
+                // Fermer la modal après l'ajout
+                const modal = document.getElementById("mode_edition2");
+                if (modal) {
+                    modal.hidePopover();
+                }
             } else {
                 const errorData = await response.json().catch(() => null);
                 alert(errorData?.error || "Échec de l'ajout du projet.");

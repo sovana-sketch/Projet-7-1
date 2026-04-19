@@ -200,6 +200,13 @@ header {
     background-color: #174c42;
 }
 
+.error-message {
+    color: #d32f2f;
+    font-size: 12px;
+    margin-top: 4px;
+    display: none;
+}
+
 .btn_close,
 #btn-back {
     position: absolute;
